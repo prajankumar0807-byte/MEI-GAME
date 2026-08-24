@@ -1,1 +1,0 @@
-import {Request,Response} from 'express';export async function me(req:Request,res:Response){res.json({user:{uid:req.auth!.uid,...req.auth!.user}})}export async function logout(_req:Request,res:Response){res.json({ok:true})}

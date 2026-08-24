@@ -1,1 +1,0 @@
-export default function Logo(){return <div className="flex items-center gap-3"><div className="h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-blue-500 grid place-items-center font-black">M</div><div><div className="font-black tracking-tight text-xl">MEIGAME</div><div className="text-[10px] uppercase tracking-[.3em] text-slate-400">Live College Quiz</div></div></div>}

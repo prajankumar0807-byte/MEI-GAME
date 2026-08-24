@@ -1,1 +1,0 @@
-import {describe,it,expect} from 'vitest'; describe('MEIGAME smoke',()=>{it('has correct role vocabulary',()=>expect(['SUPER_ADMIN','STAFF','USER','PARTICIPANT']).toContain('SUPER_ADMIN'))});

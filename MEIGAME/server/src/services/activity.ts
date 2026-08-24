@@ -1,1 +1,0 @@
-import {db} from '../config/firebase.js';export async function logActivity(input:{userId:string;action:string;targetType?:string;targetId?:string;metadata?:Record<string,unknown>;ipAddress?:string;userAgent?:string}){await db().collection('activityLogs').add({...input,createdAt:new Date().toISOString()})}

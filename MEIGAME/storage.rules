@@ -1,8 +1,0 @@
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    function signedIn() { return request.auth != null; }
-    match /profilePhotos/{uid}/{file} { allow read: if signedIn(); allow write: if signedIn() && request.auth.uid == uid && request.resource.size < 5 * 1024 * 1024; }
-    match /quizAssets/{allPaths=**} { allow read: if signedIn(); allow write: if false; }
-  }
-}
