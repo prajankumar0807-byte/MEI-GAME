@@ -1,0 +1,2 @@
+import {auth} from '../services/firebase';
+export async function api<T>(path:string, options:RequestInit={}){const token=auth.currentUser?await auth.currentUser.getIdToken():null; const res=await fetch(`${import.meta.env.VITE_API_URL||'http://localhost:5000/api'}${path}`,{...options,headers:{'Content-Type':'application/json',...(token?{Authorization:`Bearer ${token}`}:{ }),...(options.headers||{})}}); const data=await res.json().catch(()=>({})); if(!res.ok) throw new Error(data.message||'Request failed'); return data as T;}

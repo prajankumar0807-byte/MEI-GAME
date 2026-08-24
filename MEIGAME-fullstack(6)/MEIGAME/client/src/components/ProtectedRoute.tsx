@@ -1,0 +1,2 @@
+import {Navigate,useLocation} from 'react-router-dom'; import {useAuth} from '../contexts/AuthContext'; import {ReactNode} from 'react';
+export default function ProtectedRoute({children,roles}:{children:ReactNode;roles?:string[]}){const {user,loading}=useAuth();const loc=useLocation();if(loading)return <div className="min-h-screen grid place-items-center">Loading MEIGAME…</div>;if(!user)return <Navigate to="/login" state={{from:loc.pathname}} replace/>;if(roles&&!roles.includes(user.role))return <Navigate to="/" replace/>;return <>{children}</>}
