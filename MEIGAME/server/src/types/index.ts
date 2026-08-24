@@ -1,0 +1,1 @@
+export type Role='SUPER_ADMIN'|'STAFF'|'USER'|'PARTICIPANT'; export type Permission='CREATE_QUIZ'|'EDIT_QUIZ'|'DELETE_QUIZ'|'START_QUIZ'|'END_QUIZ'|'VIEW_RESULTS'|'VIEW_ANALYTICS'; export interface AuthContext{uid:string;role:Role;email?:string;user:any} declare global{namespace Express{interface Request{auth?:AuthContext}}}

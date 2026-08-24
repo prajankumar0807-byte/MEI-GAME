@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function userDoc() { return get(/databases/$(database)/documents/users/$(request.auth.uid)); }
+    function role(r) { return signedIn() && userDoc().data.role == r; }
+    function admin() { return role('SUPER_ADMIN'); }
+    function staff() { return role('STAFF') || admin(); }
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || admin());
+      allow create, update: if admin();
+      allow delete: if admin() && uid != request.auth.uid;
+    }
+    match /quizzes/{quizId} { allow read: if signedIn(); allow write: if admin() || staff();
+      match /questions/{questionId} { allow read: if signedIn(); allow write: if admin() || staff(); }
+    }
+    match /quizSessions/{id} { allow read: if signedIn(); allow write: if admin() || staff(); }
+    match /participants/{id} { allow read: if signedIn(); allow create: if signedIn(); allow update: if signedIn(); }
+    match /answers/{id} { allow read, write: if false; }
+    match /quizResults/{id} { allow read: if signedIn(); allow write: if false; }
+    match /activityLogs/{id} { allow read: if admin(); allow write: if false; }
+    match /staffPermissions/{id} { allow read: if admin() || request.auth.uid == id; allow write: if admin(); }
+    match /roles/{id} { allow read: if admin(); allow write: if false; }
+    match /quizSettings/{id} { allow read: if signedIn(); allow write: if admin(); }
+  }
+}
